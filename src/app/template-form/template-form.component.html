@@ -1,0 +1,104 @@
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" class="row g-3">
+
+    <div ngModelGroup="area">
+        <div class="col-md-12">
+            <select class="form-select" name="curso" id="curso" ngModel required #curso="ngModel"
+                [ngClass]="aplicaCssError(curso)">
+
+                <option selected value="">Selecione seu Curso</option>
+                <option>Medicina</option>
+                <option>Odontolgia</option>
+                <option>Fisioterapia</option>
+                <option>Enfermagem</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <label for="nome" class="form-label">Nome</label>
+        <input type="text" class="form-control" name="nome" id="nome" [(ngModel)]="usuario.nome" placeholder="Nome"
+            #nome="ngModel" [ngClass]="aplicaCssError(nome)" required>
+    </div>
+
+    <div class="col-md-6">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" name="email" id="email" [(ngModel)]="usuario.email"
+            placeholder="nome@email.com" #email="ngModel" [ngClass]="aplicaCssError(email)" required email>
+
+        <!-- Expressão regular para email -->
+        <!-- pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" -->
+    </div>
+
+    <div class="col-md-6">
+        <label for="celular" class="form-label">Celular</label>
+        <input type="text" class="form-control" name="celular" id="celular" ngModel
+            placeholder="(00-00000-0000)" #celular="ngModel" [ngClass]="aplicaCssError(celular)" required>
+    </div>
+
+    <div ngModelGroup="endereco">
+        <!-- inicio da div -->
+
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label for="cep" class="form-label">CEP</label>
+                <input type="text" class="form-control" name="cep" id="cep" ngModel placeholder="CEP"
+                    #cep="ngModel" [ngClass]="aplicaCssError(cep)"
+                    (blur)="consultaCEP(cep.value,(f))">
+
+            </div>
+
+            <!-- <div class="col-md-2">
+                <label for="numero" class="form-label">Número</label>
+                <input type="text" class="form-control" name="numero" id="numero" ngModel
+                    placeholder="Nº" #numero="ngModel">
+            </div> -->
+
+            <div class="col-md-8">
+                <label for="complemento" class="form-label">Complemento</label>
+                <input type="text" class="form-control" name="complemento" id="complemento"
+                [ngClass]="aplicaCssError(complemento)" ngModel #complemento="ngModel">
+            </div>
+
+            <div class="col-md-12">
+                <label for="rua" class="form-label">Rua</label>
+                <input type="text" class="form-control" name="rua" id="rua" ngModel #rua="ngModel"
+                    [ngClass]="aplicaCssError(rua)" required>
+            </div>
+
+            <div class="col-md-6">
+                <label for="bairro" class="form-label">Bairro</label>
+                <input type="text" class="form-control" name="bairro" id="bairro" ngModel
+                    #bairro="ngModel" [ngClass]="aplicaCssError(bairro)" required>
+            </div>
+
+            <div class="col-md-4">
+                <label for="cidade" class="form-label">Cidade</label>
+                <input type="text" class="form-control" name="cidade" id="cidade" ngModel
+                    #cidade="ngModel" [ngClass]="aplicaCssError(cidade)" required>
+            </div>
+
+            <div class="col-md-2">
+                <label for="estado" class="form-label">Estado</label>
+                <input type="text" class="form-control" name="estado" id="estado" ngModel
+                    #estado="ngModel" [ngClass]="aplicaCssError(estado)" required>
+            </div>
+        </div>
+
+    </div> <!-- fim da div -->
+
+    <!-- <div class="col-12">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="check" name="check" ngModel>
+            <label class="form-check-label" for="check">
+                Aceito que a instituição use os dados informados para me contatar
+            </label>
+        </div>
+    </div> -->
+
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary mb-3" [disabled]="!f.valid">Avançar</button>
+    </div>
+
+    <!-- debug form -->
+    <app-form-debug [form]="f"></app-form-debug>
+
+</form>

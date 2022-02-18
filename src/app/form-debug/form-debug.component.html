@@ -1,0 +1,26 @@
+<style>
+    .tag {
+        margin-top: 10px;
+        background: rgba(243, 243, 243, 0.8);
+        padding: 10px;
+        border-radius: 3px;
+        border: solid 1px rgba(224, 224, 224, 0.8);
+    }
+</style>
+
+<div *ngIf="form">
+    <div>
+        Detalhes do Form:
+    </div>
+
+    <pre class="tag">
+    Form válido: {{ form.valid }}
+</pre>
+    <pre class="tag">
+    Form submetido: {{ form.submitted }}
+</pre>
+    <pre class="tag">
+    Valores: <br> {{ form.value | json }}
+</pre>
+
+</div>
