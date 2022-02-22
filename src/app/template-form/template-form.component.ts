@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
+import { ConsultaCepService } from '../shared/services/consulta-cep.service';
 
 @Component({
   selector: 'app-template-form',
@@ -28,14 +29,17 @@ export class TemplateFormComponent implements OnInit {
     //console.log(this.usuario);
 
     this.http.post('https://httpbin.org/post', JSON.stringify(form.value))
-    .pipe(map((res: any) => res))
-    .subscribe(res => this.populaDadosForm(res, form));
+      .pipe(map((res: any) => res))
+      .subscribe(res => this.populaDadosForm(res, form));
   }
 
-  constructor(private http: HttpClient) { }
-  
-  ngOnInit(): void {    
-    
+  constructor(
+    private http: HttpClient,
+    private cepService: ConsultaCepService
+  ) { }
+
+  ngOnInit(): void {
+
   }
 
   verificaValidTouched(campo: { valid: any; touched: any; }) {
@@ -53,43 +57,33 @@ export class TemplateFormComponent implements OnInit {
     }
   }
 
+  // API CEP
   consultaCEP(cep: any, form: any) {
     //Nova variável "cep" somente com dígitos.
     cep = cep.replace(/\D/g, '');
 
-    //Verifica se campo cep possui valor informado.
-    if (cep != null && cep !== '') {      
-      //Expressão regular para validar o CEP.
-      var validacep = /^[0-9]{8}$/;
-
-      //Valida o formato do CEP.
-      if (validacep.test(cep)) {
-
-        this.resetaDadosForm(form);
-
-        this.http.get(`//viacep.com.br/ws/${cep}/json`)
-          .pipe(map((dados: any) => dados))
-          .subscribe(dados => this.populaDadosForm(dados, form));
-      }
+    if (cep != null && cep !== '') {
+      this.cepService.consultaCEP(cep)
+        .subscribe(dados => this.populaDadosForm(dados, form));
     }
   }
 
-  populaDadosForm(dados: any, formulario: any){
+  populaDadosForm(dados: any, formulario: any) {
     formulario.setValue({
       area: {
         curso: ""
-        },
-        nome: formulario.value.nome,
-        email: formulario.value.email,
-        celular: null,
-        endereco: {
-          cep: dados.cep,
-          complemento: dados.complemento,
-          rua: dados.logradouro,
-          bairro: dados.bairro,
-          cidade: dados.localidade,
-          estado: dados.uf
-        }
+      },
+      nome: formulario.value.nome,
+      email: formulario.value.email,
+      celular: null,
+      endereco: {
+        cep: dados.cep,
+        complemento: dados.complemento,
+        rua: dados.logradouro,
+        bairro: dados.bairro,
+        cidade: dados.localidade,
+        estado: dados.uf
+      }
     });
 
     formulario.form.patchValue({
@@ -103,14 +97,14 @@ export class TemplateFormComponent implements OnInit {
     });
   }
 
-  resetaDadosForm(formulario: any){
+  resetaDadosForm(formulario: any) {
     formulario.form.patchValue({
       endereco: {
         complemento: null,
         rua: null,
         bairro: null,
         cidade: null,
-        estado: null 
+        estado: null
       }
     });
   }
