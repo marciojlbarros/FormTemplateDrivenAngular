@@ -1,34 +1,33 @@
 <form class="row g-3" [formGroup]="formulario" (ngSubmit)="onSubmit()">
 
-        <div class="col-md-12" formGroupName="area">
-            <select class="form-select" [ngClass]="aplicaCssError('area')" formControlName="curso" id="curso">
+    <div class="col-md-12" formGroupName="area">
+        <select class="form-select" [ngClass]="aplicaCssError('area')" formControlName="curso" id="curso">
 
-                <option selected value="">Selecione seu Curso</option>
-                <option>Medicina</option>
-                <option>Odontolgia</option>
-                <option>Fisioterapia</option>
-                <option>Enfermagem</option>
-            </select>
-        </div>
+            <option selected value="">Selecione seu Curso</option>
+            <option>Medicina</option>
+            <option>Odontolgia</option>
+            <option>Fisioterapia</option>
+            <option>Enfermagem</option>
+        </select>
+    </div>
 
 
     <div class="col-md-12">
         <label for="nome" class="form-label">Nome</label>
-        <input type="text" class="form-control" [ngClass]="aplicaCssError('nome')"
-        formControlName="nome" id="nome" placeholder="Nome">
+        <input type="text" class="form-control" [ngClass]="aplicaCssError('nome')" formControlName="nome" id="nome"
+            placeholder="Nome">
     </div>
 
     <div class="col-md-6">
         <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" [ngClass]="aplicaCssError('email')"
-        formControlName="email" id="email" placeholder="nome@email.com">
+        <input type="email" class="form-control" [ngClass]="aplicaCssError('email')" formControlName="email" id="email"
+            placeholder="nome@email.com">
     </div>
-    
+
     <div class="col-md-6">
         <label for="celular" class="form-label">Celular</label>
-        <input type="text" class="form-control" [ngClass]="aplicaCssError('celular')"
-        formControlName="celular" id="celular"
-            placeholder="(00-00000-0000)">
+        <input type="text" class="form-control" [ngClass]="aplicaCssError('celular')" formControlName="celular"
+            id="celular" placeholder="(00-00000-0000)">
     </div>
 
     <div formGroupName="endereco">
@@ -37,46 +36,47 @@
         <div class="row g-3">
             <div class="col-md-4">
                 <label for="cep" class="form-label">CEP</label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssError('endereco.cep')"
-                formControlName="cep" id="cep" placeholder="CEP"
-                (blur)="consultaCEP()">
+                <input type="text" class="form-control" [ngClass]="aplicaCssError('endereco.cep')" formControlName="cep"
+                    id="cep" placeholder="CEP" (blur)="consultaCEP()">
 
             </div>
-      
+
             <div class="col-md-8">
                 <label for="complemento" class="form-label">Complemento</label>
                 <input type="text" class="form-control" [ngClass]="aplicaCssError('endereco.complemento')"
-                formControlName="complemento" id="complemento">
+                    formControlName="complemento" id="complemento">
             </div>
 
             <div class="col-md-10">
                 <label for="rua" class="form-label">Rua</label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssError('endereco.rua')"
-                formControlName="rua" id="rua">
+                <input type="text" class="form-control" [ngClass]="aplicaCssError('endereco.rua')" formControlName="rua"
+                    id="rua">
             </div>
 
             <div class="col-md-2">
                 <label for="numero" class="form-label">Número</label>
-                <input type="text" class="form-control" formControlName="numero" id="numero"
-                    placeholder="Nº" [ngClass]="aplicaCssError('endereco.numero')">
+                <input type="text" class="form-control" formControlName="numero" id="numero" placeholder="Nº"
+                    [ngClass]="aplicaCssError('endereco.numero')">
             </div>
 
             <div class="col-md-6">
                 <label for="bairro" class="form-label">Bairro</label>
                 <input type="text" class="form-control" [ngClass]="aplicaCssError('endereco.bairro')"
-                formControlName="bairro" id="bairro">
+                    formControlName="bairro" id="bairro">
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for="cidade" class="form-label">Cidade</label>
                 <input type="text" class="form-control" [ngClass]="aplicaCssError('endereco.cidade')"
-                formControlName="cidade" id="cidade">
+                    formControlName="cidade" id="cidade">
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <label for="estado" class="form-label">Estado</label>
-                <input type="text" class="form-control" [ngClass]="aplicaCssError('endereco.estado')"
-                formControlName="estado" id="estado">
+                <select class="form-select" [ngClass]="aplicaCssError('endereco.estado')"
+                    formControlName="estado" id="estado">                    
+                    <option *ngFor="let estado of estados | async" [value]="estado.sigla">{{ estado.nome }}</option>
+                </select>
             </div>
         </div>
 
