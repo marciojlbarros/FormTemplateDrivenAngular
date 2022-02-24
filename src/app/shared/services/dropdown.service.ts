@@ -13,4 +13,12 @@ export class DropdownService {
     return this.http.get('assets/dados/estadosbr.json')
     .pipe(map(res => res));
   }
+
+  getProcessosSeletivos(){
+    return [
+      { nome: 'EAD', categoria: 'Flex' },
+      { nome: 'Unificado', categoria: 'Presencial' }
+    ]
+  }
+
 }

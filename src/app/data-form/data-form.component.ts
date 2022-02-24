@@ -16,6 +16,7 @@ export class DataFormComponent implements OnInit {
   formulario!: FormGroup;
   //estados!: EstadoBr[];
   estados!: Observable<EstadoBr[]>;
+  processosSeletivos!: any[];
 
 
   constructor(
@@ -28,6 +29,8 @@ export class DataFormComponent implements OnInit {
   ngOnInit(): void {
 
     this.estados = this.dropdownService.getEstadosBr();
+
+    this.processosSeletivos = this.dropdownService.getProcessosSeletivos();
 
     // this.dropdownService.getEstadosBr()
     //   .subscribe(dados => {
@@ -53,7 +56,9 @@ export class DataFormComponent implements OnInit {
         bairro: [null, Validators.required],
         cidade: [null, Validators.required],
         estado: [null, Validators.required]
-      })
+      }),
+      processosSeletivos:[null]
+
     });
 
   }
@@ -133,7 +138,7 @@ export class DataFormComponent implements OnInit {
       }
     });
 
-    //this.formulario.get('nome')?.setValue('Márcio');
+    //this.formulario.get('nome')?.setValue('Márcio Barros');
 
   }
 
@@ -147,6 +152,15 @@ export class DataFormComponent implements OnInit {
         estado: null
       }
     });
+  }
+
+  setarProcessos(){
+    const processosSeletivos = { nome: 'Unificado', categoria: 'Presencial' };
+    this.formulario.get('processosSeletivos')?.setValue(processosSeletivos);
+  }
+
+  compararProcessosSeletivos(obj1: any, obj2: any){
+    return obj1 && obj2 ? (obj1.nome === obj2.nome && obj1.categoria === obj2.categoria) : obj1 === obj2;
   }
 
 }
